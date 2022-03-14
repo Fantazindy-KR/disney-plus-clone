@@ -1,11 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { selectMovies } from "../features/movie/movieSlice";
+import { useSelector } from "react-redux";
 
 function Movies() {
+  const movies = useSelector(selectMovies);
+  console.log("This is movies", movies);
+
   return (
     <Container>
       <h4>Recommended for You</h4>
       <Content>
+        {movies &&
+          movies.map((movie) => (
+            <Wrap key={movie.id}>
+              <img src={movie.cardImg} />
+            </Wrap>
+          ))}
         <Wrap>
           <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/AA3685D9018EF43D23719E035827C9F702A2BE7F7CC992A6F63F43199058677A/scale?width=1200&aspectRatio=1.78&format=jpeg" />
         </Wrap>
