@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { selectMovies } from "../features/movie/movieSlice";
 import { useSelector } from "react-redux";
 
@@ -14,21 +15,11 @@ function Movies() {
         {movies &&
           movies.map((movie) => (
             <Wrap key={movie.id}>
-              <img src={movie.cardImg} />
+              <Link to={`/detail/${movie.id}`}>
+                <img src={movie.cardImg} />
+              </Link>
             </Wrap>
           ))}
-        <Wrap>
-          <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/AA3685D9018EF43D23719E035827C9F702A2BE7F7CC992A6F63F43199058677A/scale?width=1200&aspectRatio=1.78&format=jpeg" />
-        </Wrap>
-        <Wrap>
-          <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/AA3685D9018EF43D23719E035827C9F702A2BE7F7CC992A6F63F43199058677A/scale?width=1200&aspectRatio=1.78&format=jpeg" />
-        </Wrap>
-        <Wrap>
-          <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/AA3685D9018EF43D23719E035827C9F702A2BE7F7CC992A6F63F43199058677A/scale?width=1200&aspectRatio=1.78&format=jpeg" />
-        </Wrap>
-        <Wrap>
-          <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/AA3685D9018EF43D23719E035827C9F702A2BE7F7CC992A6F63F43199058677A/scale?width=1200&aspectRatio=1.78&format=jpeg" />
-        </Wrap>
       </Content>
     </Container>
   );
