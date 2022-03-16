@@ -1,41 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import db from "../firebase";
 
 function Detail() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState();
+
+  useEffect(() => {
+    db.collection("movies")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setMovie(doc.data());
+        } else {
+        }
+      });
+  }, []);
+
+  console.log("Movie is", movie);
+
   return (
     <Container>
-      <Background>
-        <img src="https://cdn.wallpapersafari.com/79/81/sCDgJ1.jpg" />
-      </Background>
-      <ImageTitle>
-        <img src="https://www.seekpng.com/png/full/20-200510_frozen-musical-logo-frozen-logo-png.png" />
-      </ImageTitle>
-      <Controls>
-        <PlayButton>
-          <img src="/images/play-icon-black.png" />
-          <span>PLAY</span>
-        </PlayButton>
-        <TrailerButton>
-          <img src="/images/play-icon-white.png" />
-          <span>Trailer</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupWatchButton>
-          <img src="/images/group-icon.png" />
-        </GroupWatchButton>
-      </Controls>
-      <SubTitle>2013 American computer-animated musical fantasy film</SubTitle>
-      <Description>
-        Frozen is a 2013 American computer-animated musical fantasy film
-        produced by Walt Disney Animation Studios and released by Walt Disney
-        Pictures.[5] The 53rd Disney animated feature film, it is inspired by
-        Hans Christian Andersen's fairy tale "The Snow Queen". The film depicts
-        a princess who sets off on a journey alongside an iceman, his reindeer,
-        and a snowman to find her estranged sister, whose icy powers have
-        inadvertently trapped their kingdom in eternal winter.
-      </Description>
+      {movie && (
+        <>
+          <Background>
+            <img src={movie.backgroundImg} />
+          </Background>
+          <ImageTitle>
+            <img src={movie.titleImg} />
+          </ImageTitle>
+          <Controls>
+            <PlayButton>
+              <img src="/images/play-icon-black.png" />
+              <span>PLAY</span>
+            </PlayButton>
+            <TrailerButton>
+              <img src="/images/play-icon-white.png" />
+              <span>Trailer</span>
+            </TrailerButton>
+            <AddButton>
+              <span>+</span>
+            </AddButton>
+            <GroupWatchButton>
+              <img src="/images/group-icon.png" />
+            </GroupWatchButton>
+          </Controls>
+          <SubTitle>{movie.subTitle}</SubTitle>
+          <Description>{movie.description}</Description>
+        </>
+      )}
     </Container>
   );
 }
